@@ -1,57 +1,68 @@
-# Config.plist Basics
+# Config.plist 入門
 
-The _config.plist_ resides at _/Volumes/EFI/EFI/CLOVER/config.plist_ and is one of the tougher files to work with for those new to the Hackintosh world. We'll go into some of the basics of the structure here, then break out into different sections for different hardware config setup.
+ _Config.plist_ 位於 _/你的EFI磁盤位置/EFI/CLOVER/config.plist_ 裡。這也是整個黑蘋果安裝中最具難度的一部分，因此我們現在來學習一下Config.plist的檔案結構，然後就根據不同的硬件平台去套用適當的配置檔。 
 
-## What Is It?
+## 什麼是Config.plist?
 
-The _config.plist_ is an XML property list. XML is a markup language that shares a lot of similarities with HTML. This means you've got a few different data types available to you, and most of the structure revolves around keeping track of opening and closing tags.
+ _Config.plist_ 是一個XML文件。 他和我們經常用來開發網頁的HTML類似，都是標記語言。
+ 也就是說，所有HTML要遵守的規範，在XML上也要遵守。
 
-### The Structure
+ ### 除錯
+ 為了防止新手設置錯Config.plist，其實你可以在macOS上輸入以下的指令來檢查你的Clover.plist有沒有標記錯誤：
+ 
+ _plutil /你的/Config.plist/的路徑_
 
-When Clover explores a _config.plist_ it expects to have certain parts in certain spots. The order and scope of your config are very important as putting information in the wrong spot can effectively hide it from Clover. You can view the general layout that Clover expects on the [Clover Wiki](https://clover-wiki.zetam.org/Configuration#Config.plist-structure).
+它可以幫你檢查你的Config.plist有沒有錯誤。
 
-### Data Types
 
-There are a few major data types we'll run into when working with the config. I'll outline the most common here. **Note -** I'm only using the opening tags here, when actually working with the following types we'll need to make sure we clean up after ourselves and close our tags.
+ ### 結構
 
-#### Strings
+當Clover打開 _config.plist_ 時，Clover會自動搜尋各個部件相應的描述的位置。因此Config.plist上所格式和編排的位置十分重要，否則Clover會跳過該段描述標記內容。 你可以在[Clover 維基](https://clover-wiki.zetam.org/Configuration#Config.plist-structure)上看到Config.plist應有的格式。
 
-`<string>This is a string</string>`
+### 資料類型
 
-Strings are just text. Not terribly crazy - you will see them used a lot for comments and other such things.
+在Config.plist中，我們會經常接觸到以下一些常見的資料類型：
 
-#### Integers
+#### 字串
 
-`<integer>1</integer>`
+例子： `<string>這是一個字串。</string>`
 
-These are just whole numbers. Again, nothing too wild here.
+字串就是一些文字，你可以在一些註解或者其他的地方看到，沒有什麼特別。
 
-#### Data
+#### 整數
 
-`<data>RXh0ZXJuYWw=</data>`
+例子： `<integer>1</integer>`
 
-While this looks similar to the _strings_ above, it's actually the _base64_ representation of some data. _Wtf does that mean?_ You can read up on it [here](https://en.wikipedia.org/wiki/Base64), but in summation - it's a slick way to save binary data in a text format without it getting lost when copied, moved, etc. What's even more crazy is that you can take the above base64 data and convert it to ASCII via the following in Terminal.app:
+就是一些整數。
 
+#### 數據
+
+例子： `<data>RXh0ZXJuYWw=</data>`
+
+儘管它看起來很像字串，但其實裡面儲存的是一些以base64表示的數據。這裡是維基百科關於base64的[傳送門](https://zh.wikipedia.org/wiki/Base64), 總括而言， 它可以將二進制檔案，以文本的方式儲存。這樣數據就不怕在移動，複製時被丟失。你也可以透過macOS的終端機，將base64的數據轉換成ASCII文字：
+ 
 `echo RXh0ZXJuYWw= | python -m base64 -d && echo`
 
-This will output `External` on the next line. We use the `&& echo` to output a newline after our text is spit out - this makes it easier to read.
+這行命令就會在下一行輸出 `External`。為了方便我們閱讀，我們可以使用 `&& echo` 指令來將輸出的文字放在下一行。
 
+當然你也可以在終端機中，將ACSII文字轉換成base64數據：
 You can also convert from ASCII to base64 \(handy for working with ACPI renames - more about that later\) with the following in Terminal.app:
 
 `echo External | base64`
 
-This will spit out `RXh0ZXJuYWw=` which is exactly what we'd expect.
+就會輸出`RXh0ZXJuYWw=`，這個功能在ACPi重命名時十分有用。
 
-**Note -** Many plist editors \(Clover Configurator, Xcode, etc\) will display data as _hexadecimal_ instead of _base64_, so make sure you pay attention to which you're using.
+**注意 -** 有些plist編輯器 \(例如 Clover Configurator, Xcode, 等等\) 會將base64顯示成 hexdecimal，因此要注意輸入。
 
-#### Booleans
+#### 布爾值
 
-`<true/>` or `<false/>`
+例子： `<true/>` 或者 `<false/>`
 
-These are _boolean_ values. You can think of them as _on/off_ values. Unlike the other types listed here, these are both an opening and closing tag at once so they don't require a matching tag.
+這些就是布爾值，只有true和false。 **它們也是唯一集合開始和結束標記的標記語。**
 
-#### Arrays
+#### 陣列
 
+例子：
 ```markup
 <array>
     <string>Bob</string>
@@ -60,9 +71,9 @@ These are _boolean_ values. You can think of them as _on/off_ values. Unlike the
 </array>
 ```
 
-This is an unordered list of items. If we wanted to gather up a collection of names, we could store them as `<string>` values in our `<array>` like the above example. They are accessed by index \(which is just the number they're at in the list\).
+這是一連串未經排序的資料。有時候如果我們想將一些名字組合在一起，我們可以像上面的例子一樣，在`<array>`裡使用`<string>`來儲存。它們可以通過以索引訪問 \(也就是他們的編號\).
 
-#### Dictionaries
+#### 字典
 
 ```markup
 <dict>

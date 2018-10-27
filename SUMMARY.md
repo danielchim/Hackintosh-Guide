@@ -1,12 +1,12 @@
-# Table of contents
+# 目錄
 
-* [Getting Started](README.md)
-* [Gathering Kexts](gathering-kexts.md)
-* [Building the USB Installer](building-the-usb-installer.md)
-* [Clover Setup](clover-setup.md)
-* [Config.plist Basics](config.plist-basics.md)
+* [快速入門](README.md)
+* [獲得所需的驅動程式（kext）](gathering-kexts.md)
+* [建立USB安裝盤](building-the-usb-installer.md)
+* [配置Clover](clover-setup.md)
+* [Config.plist入門](config.plist-basics.md)
 
-## Config.Plist Per Hardware
+## 各個CPU平台要用到的Config.Plist
 
 * [Ivy Bridge](config.plist-per-hardware/ivy-bridge.md)
 * [Haswell](config.plist-per-hardware/haswell.md)
