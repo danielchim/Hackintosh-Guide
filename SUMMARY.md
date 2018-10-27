@@ -1,6 +1,6 @@
 # Table of contents
 
-* [Getting Started](README.md)
+* [快速入門](README.md)
 * [Gathering Kexts](gathering-kexts.md)
 * [Building the USB Installer](building-the-usb-installer.md)
 * [Clover Setup](clover-setup.md)

@@ -22,7 +22,7 @@ You can now run the corresponding command from [Apple's own instructions](https:
 sudo "/Applications/Install macOS Mojave.app/Contents/Resources/createinstallmedia" --volume /Volumes/USB
 ```
 
-_This will take some time, and it doesn't output much for status updates._ It can take upwards of 30-40 minutes, so just be patient.  Grab a cup of coffee, read the news, catch up with friends and family - you'll be here for a bit
+_This will take some time, and it doesn't output much for status updates._ It can take upwards of 30-40 minutes, so just be patient. Grab a cup of coffee, read the news, catch up with friends and family - you'll be here for a bit
 
 When this completes, you will have a USB installer that can boot on a _real Mac_. We just need to get the Hackintosh-related stuff set up, and we'll be in business!
 
