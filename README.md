@@ -33,20 +33,20 @@
 
 1. 一隻8GB以上的USB記憶棒。
 
-2. Install OS X/macOS.app 程式。\(建議從App Store上下載。\)
+2. Install OS X/macOS.app 程式。\(建議從App Store上下載，後面的文章也有鏡像鏈接。\)
 
-3. \_\_[Clover 安裝包](https://github.com/Dids/clover-builder/releases) __\(由Dids提供。\)
+3. [Clover 安裝包](https://github.com/Dids/clover-builder/releases) (由Dids提供。\)
 
 4. [Clover 編輯器 (Clover Configrator)](http://mackie100projects.altervista.org/download-clover-configurator/) \(有經驗的用家可以直接使用任何文本編輯器修改，但對於一般使用者而言，Clocver Configrator更
 方便和上手使用。\)
    * 記得是下載 _Global_ 版。
 
-5. \_\_[_VirtualSMC.kext_](https://github.com/acidanthera/VirtualSMC/releases) - 這個應該有碰過黑蘋果的都應該會問：不是 _FakeSMC.kext_ 嗎？現在我們會使用   VirtualSMC.kext 作為SMC模擬器。這是整個黑蘋果安裝中最重要的驅動程式，沒有了它，就無法啟動我們的安裝盤，跟別提macOS開機了。
+5. [_VirtualSMC.kext_](https://github.com/acidanthera/VirtualSMC/releases) - 這個應該有碰過黑蘋果的都應該會問：不是 _FakeSMC.kext_ 嗎？現在我們會使用   VirtualSMC.kext 作為SMC模擬器。這是整個黑蘋果安裝中最重要的驅動程式，沒有了它，就無法啟動我們的安裝盤，跟別提macOS開機了。
 
 6. 各個硬件需要用到的kext。
 
 7. 耐性, 毅力, 和懂得使用Google/百度。
   （建議使用Google搜尋，比較多資源。）
 
-* 好了，現在我們可以前往[下一步](building-the-usb-installer.md)了！
+* 好了，現在我們可以前往[下一步](gethwinfo.md)了！
 

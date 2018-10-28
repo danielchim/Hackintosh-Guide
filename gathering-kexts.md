@@ -2,11 +2,12 @@
 
 ## 我需要哪些驅動程式？
 
-首先我們必須要VirtualSMC.kext，他負責模擬真的Mac電腦裡的SMC晶片，用來偽裝成一台真正的Mac電腦。也就是說，如果沒有了VirtualSMC.kext的話，就無法啟動macOS。
+### VirtualSMC.kext
+首先我們必須要VirtualSMC.kext，它負責模擬真的Mac電腦裡的SMC晶片，從而使我們的黑蘋果偽裝成一台真正的Mac電腦。也就是說，如果沒有了VirtualSMC.kext的話，就無法啟動macOS。
 
 所有必須的驅動程式都可以在 [這個由Goldfish64所建立的倉庫中](https://1drv.ms/f/s!AiP7m5LaOED-m-J8-MLJGnOgAqnjGw) 找到 。 當中的每一個驅動程式式都會在有新的變動（Commit）時發布一次更新。
 
-當然如果你喜歡有自己來編譯這些驅動程式的話，你可以參考一下[這個腳本 ](https://github.com/corpnewt/Lilu-and-Friends)。
+當然如果你喜歡由自己來編譯這些驅動程式的話，你可以參考一下[這個腳本 ](https://github.com/corpnewt/Lilu-and-Friends)。
 
 ### 網卡：
 
@@ -42,7 +43,7 @@ Apple 對於Wifi晶片的支援很少, 因此這裡就舉些例子.
 
 Wifi晶片建議先Google/百度一下你的Wifi晶片型號是否被macOS支援，可以節省不少時間。
 
-還有你可以在淘寶上花200多久可以有一個兼容macOS黑蘋果的WiFi PCIe卡。
+還有你可以在淘寶上花200多就可以有一個兼容macOS黑蘋果的WiFi PCIe卡。
 
 ### 額外的硬件：
 
