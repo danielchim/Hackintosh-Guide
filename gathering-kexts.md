@@ -1,36 +1,51 @@
-# Gathering Kexts
+# 獲得所需的驅動程式（kext）
 
-## What Kexts Do I Need?
+## 我需要哪些驅動程式？
 
-_VirtualSMC.kext_ is a requirement - it emulates the SMC chip found on real macs, and convinces the OS that _yes, this is a real Mac_. Without it, no Hackintosh :\(
+### VirtualSMC.kext
+首先我們必須要VirtualSMC.kext，它負責模擬真的Mac電腦裡的SMC晶片，從而使我們的黑蘋果偽裝成一台真正的Mac電腦。也就是說，如果沒有了VirtualSMC.kext的話，就無法啟動macOS。
 
-All of the following kexts are available on [_this repo_ ](https://1drv.ms/f/s!AiP7m5LaOED-m-J8-MLJGnOgAqnjGw)courtesy of Goldfish64. Each kext is auto-built whenever a new commit is made. If you prefer to build them yourself, you can utilize my [_Lilu And Friends_ ](https://github.com/corpnewt/Lilu-and-Friends)script.
+所有必須的驅動程式都可以在 [這個由Goldfish64所建立的倉庫中](https://1drv.ms/f/s!AiP7m5LaOED-m-J8-MLJGnOgAqnjGw) 找到 。 當中的每一個驅動程式式都會在有新的變動（Commit）時發布一次更新。
 
-### Ethernet
+當然如果你喜歡由自己來編譯這些驅動程式的話，你可以參考一下[這個腳本 ](https://github.com/corpnewt/Lilu-and-Friends)。
 
-* \_\_[_IntelMausiEthernet.kext_ ](https://github.com/Mieze/IntelMausiEthernet)- this works with most newer Intel LAN chipsets
-* _AppleIntelE1000e.kext_ - this works with older Intel LAN chipsets - but can cause KPs on newer chipsets
-* \_\_[_AtherosE2200Ethernet.kext_ ](https://github.com/Mieze/AtherosE2200Ethernet)- this works for most Atheros or Killer networking chipsets
-* \_\_[_RealtekRTL8111.kext_](https://github.com/Mieze/RTL8111_driver_for_OS_X) - this works with most gigabit Realtek LAN chipsets
-* \_\_[_RealtekRTL8100.kext_ ](https://github.com/Mieze/RealtekRTL8100)- for 10/100 Realtek LAN chipsets
+### 網卡：
 
-### USB
+* \_\_[_IntelMausiEthernet.kext_ ](https://github.com/Mieze/IntelMausiEthernet)- 適用於現在主流的Intel網卡晶片。
+* _AppleIntelE1000e.kext_ - 適用於較久的Intel網卡晶片。- 但是當使用在較新的Intel網卡晶片時，有機會使macOS Kernel Panic。
+* \_\_[_AtherosE2200Ethernet.kext_ ](https://github.com/Mieze/AtherosE2200Ethernet)- Atheros和Killer網卡晶片適用。
+* \_\_[_RealtekRTL8111.kext_](https://github.com/Mieze/RTL8111_driver_for_OS_X) - 適用於Realtek千兆網卡晶片。
+* \_\_[_RealtekRTL8100.kext_ ](https://github.com/Mieze/RealtekRTL8100)- 適用於  Realtek 10/100M 網卡晶片
 
-You'll want to grab [_USBInjectAll.kext_](https://bitbucket.org/RehabMan/os-x-usb-inject-all/downloads/). If you're on an H370, B360, and H310 Coffee Lake systems you'll want to make sure to include the _XHCI-**3**00-series-injector.kext_ as well. X79/X99/X299 may need the _XHCI-x99-injector.kext_ from that same repo. As of 10.11, Apple has imposed a 15 port limit on each USB controller. This doesn't sound like a terribly imposing issue until you realize that each USB 3 port counts as 2 - one for USB 2, one for USB 3. On Skylake and newer builds where USB 2 and 3 are handled only on XHCI, and each USB 3 port counts as 2, this limit can be reached quickly. There is a way to route all USB 2 through EHCI though - utilizing RehabMan's [_FakePCIID.kext + FakePCIID\_XHCIMux.kext_](https://github.com/RehabMan/OS-X-Fake-PCI-ID) \_\_which opens up an extra controller and subsequently another 15 USB ports.
+### USB：
 
-### Audio
+你將會需要 [_USBInjectAll.kext_](https://bitbucket.org/RehabMan/os-x-usb-inject-all/downloads/)。 如果你的主板是使用 H370, B360 和 H310 等Coffee Lake CPU 架構的話，要再加上 _XHCI-**3**00-series-injector.kext_。 X79/X99/X299 就需要 _XHCI-x99-injector.kext_ 。
 
-For Audio - you'll want to grab /u/vit9696's [_AppleALC.kext_](https://github.com/vit9696/AppleALC/releases) and the companion [_Lilu.kext_](https://github.com/vit9696/Lilu/releases) - providing you have [a supported codec](https://github.com/vit9696/AppleALC/wiki/Supported-codecs). _AppleALC_ is capable of patching _AppleHDA.kext_ on the fly to allow for native audio with unsupported codecs. It also has a number of codec verbs built in to help with audio-after-sleep.
+這三個驅動程式都可以在USBInjectAll.kext的倉庫中找到。
 
-### Graphics
+ 在Mac OS X El Captian上， 蘋果在USB控制器上設置了不能超過15個USB端口的設定。儘管聽起來沒什麼大不了，但是其實是不夠的-----因為每個USB 3.0的端口會被當成兩個USB端口：一個是USB 2.0使用，一個是給USB 3.0。 而Skylake架構就因為USB 2.0和USB3.0都是由XHCI控制器控制，因此更快會用滿15個USB端口的限制。因此這個時候我們需要 [RehabMan的FakePCIID.kext + FakePCIID\_XHCIMux.kext](https://github.com/RehabMan/OS-X-Fake-PCI-ID) ，將USB2.0的端口改由EHCI控制器所管理，由此就可以繞過15個USB端口的限制了。
 
-For GPUs - you should grab [_WhateverGreen.kext_](https://github.com/acidanthera/WhateverGreen/releases) and the companion [_Lilu.kext_](https://github.com/vit9696/Lilu/releases) - this has the functionality of _IntelGraphicsFixup_, _NvidiaGraphicsFixup_, _CoreDisplayFixup_, and _Shiki_ all rolled into it. Prior, all of these kexts were separate - but since many of them share resources, they've been combined.
+### 聲卡：
 
-### WiFi and Bluetooth
+Reddit用戶/u/vit9696的 [_AppleALC.kext_](https://github.com/vit9696/AppleALC/releases) 和 [_Lilu.kext_](https://github.com/vit9696/Lilu/releases) - 它們會為你的聲卡提供 [macOS所適用的編碼](https://github.com/vit9696/AppleALC/wiki/Supported-codecs)。 當中_AppleALC.kext_ 是用作為 _AppleHDA.kext_ 打上補丁的驅動程式。它也可以支援在休眠後使用聲卡的編碼參數。
 
-Apple is pretty minimal with their WiFi support, so I'll only cover the two main chipsets I'm familiar with. I've used a BCM94360CD + PCIe adapter, and BCM94352HMB/BCM94352Z in my Hackintoshes. The BCM94360CD worked OOB with no extras as it's a native card. For the BCM94352 flavors, I've been using [_AirportBrcmFixup.kext_ ](https://github.com/acidanthera/AirportBrcmFixup)and the companion [_Lilu.kext_](https://github.com/vit9696/Lilu/releases) for WiFi setup and _BrcmBluetoothInjector.kext_ \(on 10.13.6+\) or _BrcmPatchRAM2.kext_ alongside _BrcmFirmwareData.kext_ - all of the Brcm\* kexts are from RehabMan's [_OS-X-BrcmPatchRAM_](https://github.com/RehabMan/OS-X-BrcmPatchRAM) repo.
+### 顯示卡：
 
-### Extras
+ 可以下載 [_WhateverGreen.kext_](https://github.com/acidanthera/WhateverGreen/releases) 和 [_Lilu.kext_](https://github.com/vit9696/Lilu/releases) - （如果前面已下載Lilu.kext的話則不需要再次下載。）當中WhateverGreen.kext已包含了以前 _IntelGraphicsFixup.kext_, _NvidiaGraphicsFixup.kext_, _CoreDisplayFixup.kext_, and _Shiki.kext_ 的功能，也就是說現在只需要這個驅動程式,就可以為你的AMD/Nvidia/Intel iGPU顯示卡打上補丁。
 
-Depending on the rest of your hardware - you _may_ need more kexts as well, but this guide is designed to be a general foundation, so you'll have to rely on your google-fu for that.
+### WiFi 和藍牙：
+
+Apple 對於Wifi晶片的支援很少, 因此這裡就舉些例子.  
+
+例如本文檔的創作者CorpNewt，使用的是 BCM94360CD晶片的PCIe網卡，以及 BCM94352HMB/BCM94352Z.  當中 BCM94360CD 因為獲得了原生支援，所以不用再額外的設定就能使用。 但是BCM94352就要安裝 [_AirportBrcmFixup.kext_ ](https://github.com/acidanthera/AirportBrcmFixup) （需要Lilu.kext） 和 _BrcmBluetoothInjector.kext_ \(macOS 10.13.6或以上\) ，或者 _BrcmPatchRAM2.kext_ 以及 _BrcmFirmwareData.kext_ 
+
+所有Boardcom Wifi晶片的驅動程式都可以在[ RehabMan的 _OS-X-BrcmPatchRAM_](https://github.com/RehabMan/OS-X-BrcmPatchRAM) 倉庫中找到。
+
+Wifi晶片建議先Google/百度一下你的Wifi晶片型號是否被macOS支援，可以節省不少時間。
+
+還有你可以在淘寶上花200多就可以有一個兼容macOS黑蘋果的WiFi PCIe卡。
+
+### 額外的硬件：
+
+要自己去Google/百度一下了。
 
