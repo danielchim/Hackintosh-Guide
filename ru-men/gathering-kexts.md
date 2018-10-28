@@ -3,6 +3,7 @@
 ## 我需要哪些驅動程式？
 
 ### VirtualSMC.kext
+
 首先我們必須要VirtualSMC.kext，它負責模擬真的Mac電腦裡的SMC晶片，從而使我們的黑蘋果偽裝成一台真正的Mac電腦。也就是說，如果沒有了VirtualSMC.kext的話，就無法啟動macOS。
 
 所有必須的驅動程式都可以在 [這個由Goldfish64所建立的倉庫中](https://1drv.ms/f/s!AiP7m5LaOED-m-J8-MLJGnOgAqnjGw) 找到 。 當中的每一個驅動程式式都會在有新的變動（Commit）時發布一次更新。
@@ -23,7 +24,7 @@
 
 這三個驅動程式都可以在USBInjectAll.kext的倉庫中找到。
 
- 在Mac OS X El Captian上， 蘋果在USB控制器上設置了不能超過15個USB端口的設定。儘管聽起來沒什麼大不了，但是其實是不夠的-----因為每個USB 3.0的端口會被當成兩個USB端口：一個是USB 2.0使用，一個是給USB 3.0。 而Skylake架構就因為USB 2.0和USB3.0都是由XHCI控制器控制，因此更快會用滿15個USB端口的限制。因此這個時候我們需要 [RehabMan的FakePCIID.kext + FakePCIID\_XHCIMux.kext](https://github.com/RehabMan/OS-X-Fake-PCI-ID) ，將USB2.0的端口改由EHCI控制器所管理，由此就可以繞過15個USB端口的限制了。
+在Mac OS X El Captian上， 蘋果在USB控制器上設置了不能超過15個USB端口的設定。儘管聽起來沒什麼大不了，但是其實是不夠的-----因為每個USB 3.0的端口會被當成兩個USB端口：一個是USB 2.0使用，一個是給USB 3.0。 而Skylake架構就因為USB 2.0和USB3.0都是由XHCI控制器控制，因此更快會用滿15個USB端口的限制。因此這個時候我們需要 [RehabMan的FakePCIID.kext + FakePCIID\_XHCIMux.kext](https://github.com/RehabMan/OS-X-Fake-PCI-ID) ，將USB2.0的端口改由EHCI控制器所管理，由此就可以繞過15個USB端口的限制了。
 
 ### 聲卡：
 
@@ -31,13 +32,13 @@ Reddit用戶/u/vit9696的 [_AppleALC.kext_](https://github.com/vit9696/AppleALC/
 
 ### 顯示卡：
 
- 可以下載 [_WhateverGreen.kext_](https://github.com/acidanthera/WhateverGreen/releases) 和 [_Lilu.kext_](https://github.com/vit9696/Lilu/releases) - （如果前面已下載Lilu.kext的話則不需要再次下載。）當中WhateverGreen.kext已包含了以前 _IntelGraphicsFixup.kext_, _NvidiaGraphicsFixup.kext_, _CoreDisplayFixup.kext_, and _Shiki.kext_ 的功能，也就是說現在只需要這個驅動程式,就可以為你的AMD/Nvidia/Intel iGPU顯示卡打上補丁。
+可以下載 [_WhateverGreen.kext_](https://github.com/acidanthera/WhateverGreen/releases) 和 [_Lilu.kext_](https://github.com/vit9696/Lilu/releases) - （如果前面已下載Lilu.kext的話則不需要再次下載。）當中WhateverGreen.kext已包含了以前 _IntelGraphicsFixup.kext_, _NvidiaGraphicsFixup.kext_, _CoreDisplayFixup.kext_, and _Shiki.kext_ 的功能，也就是說現在只需要這個驅動程式,就可以為你的AMD/Nvidia/Intel iGPU顯示卡打上補丁。
 
 ### WiFi 和藍牙：
 
-Apple 對於Wifi晶片的支援很少, 因此這裡就舉些例子.  
+Apple 對於Wifi晶片的支援很少, 因此這裡就舉些例子.
 
-例如本文檔的創作者CorpNewt，使用的是 BCM94360CD晶片的PCIe網卡，以及 BCM94352HMB/BCM94352Z.  當中 BCM94360CD 因為獲得了原生支援，所以不用再額外的設定就能使用。 但是BCM94352就要安裝 [_AirportBrcmFixup.kext_ ](https://github.com/acidanthera/AirportBrcmFixup) （需要Lilu.kext） 和 _BrcmBluetoothInjector.kext_ \(macOS 10.13.6或以上\) ，或者 _BrcmPatchRAM2.kext_ 以及 _BrcmFirmwareData.kext_ 
+例如本文檔的創作者CorpNewt，使用的是 BCM94360CD晶片的PCIe網卡，以及 BCM94352HMB/BCM94352Z. 當中 BCM94360CD 因為獲得了原生支援，所以不用再額外的設定就能使用。 但是BCM94352就要安裝 [_AirportBrcmFixup.kext_ ](https://github.com/acidanthera/AirportBrcmFixup) （需要Lilu.kext） 和 _BrcmBluetoothInjector.kext_ \(macOS 10.13.6或以上\) ，或者 _BrcmPatchRAM2.kext_ 以及 _BrcmFirmwareData.kext_
 
 所有Boardcom Wifi晶片的驅動程式都可以在[ RehabMan的 _OS-X-BrcmPatchRAM_](https://github.com/RehabMan/OS-X-BrcmPatchRAM) 倉庫中找到。
 

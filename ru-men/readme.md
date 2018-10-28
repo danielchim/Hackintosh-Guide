@@ -1,4 +1,4 @@
-# 簡介
+# 快速入門
 
 ## 原生Mac OS 安裝體驗教學
 
@@ -34,5 +34,5 @@
 5. [_VirtualSMC.kext_](https://github.com/acidanthera/VirtualSMC/releases) - 這個應該有碰過黑蘋果的都應該會問：不是 _FakeSMC.kext_ 嗎？現在我們會使用 VirtualSMC.kext 作為SMC模擬器。這是整個黑蘋果安裝中最重要的驅動程式，沒有了它，就無法啟動我們的安裝盤，跟別提macOS開機了。
 6. 各個硬件需要用到的kext。
 7. 耐性, 毅力, 和懂得使用Google/百度。 （建議使用Google搜尋，比較多資源。）
-8. 好了，現在我們可以前往[下一步](https://github.com/danielchim/Hackintosh-Guide/tree/088aba2ba7f260f857791b91eb43a38f1c3ffcda/gethwinfo.md)了！
+8. 好了，現在我們可以前往[下一步](gethwinfo.md)了！
 
